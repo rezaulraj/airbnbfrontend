@@ -13,6 +13,8 @@ import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 const dummyLocations = [
   "New York, NY",
@@ -37,6 +39,9 @@ const RootHeader = () => {
       key: "selection",
     },
   ]);
+
+
+  const { user, logout } = useAuthStore();
 
   const searchRef = useRef(null);
   const datesRef = useRef(null);
@@ -165,19 +170,55 @@ const RootHeader = () => {
 
             {isProfileOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50 border">
-                <div className="px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
-                  Help Center
-                </div>
-                <div className="px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
-                  Become a Host
-                </div>
-                <hr className="my-1" />
-                <div className="px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
-                  Sign up
-                </div>
-                <div className="px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
-                  Log in
-                </div>
+                {user ? (
+                  <>
+                    <div className="px-4 py-2 text-sm text-gray-800 border-b">
+                      <p className="font-medium">{user.name}</p>
+                      <p className="text-gray-600">{user.email}</p>
+                    </div>
+                    <Link
+                      to="/profile"
+                      className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
+                    >
+                      Profile
+                    </Link>
+                    <div className="px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+                      Help Center
+                    </div>
+                    <div className="px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+                      Become a Host
+                    </div>
+                    <button
+                      onClick={logout}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer"
+                    >
+                      Log out
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <div className="px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+                      Help Center
+                    </div>
+                    <div className="px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 cursor-pointer">
+                      Become a Host
+                    </div>
+                    <div className="flex flex-col items-center w-full">
+                      <Link
+                        to="/signup"
+                        className="px-4 py-2 w-full text-sm text-gray-800 hover:bg-gray-100 cursor-pointer"
+                      >
+                        Sign up
+                      </Link>
+                      <Link
+                        to="/login"
+                        className="px-4 py-2 w-full text-sm text-gray-800 hover:bg-gray-100 cursor-pointer"
+                      >
+                        Log in
+                      </Link>
+                    </div>
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -209,12 +250,18 @@ const RootHeader = () => {
               <span className="text-gray-700 font-medium py-2 cursor-pointer hover:bg-gray-100 px-2 rounded">
                 Help Center
               </span>
-              <span className="text-gray-700 font-medium py-2 cursor-pointer hover:bg-gray-100 px-2 rounded">
+              <Link
+                to="/signup"
+                className="text-gray-700 font-medium py-2 cursor-pointer hover:bg-gray-100 px-2 rounded"
+              >
                 Sign up
-              </span>
-              <span className="text-gray-700 font-medium py-2 cursor-pointer hover:bg-gray-100 px-2 rounded">
+              </Link>
+              <Link
+                to="/login"
+                className="text-gray-700 font-medium py-2 cursor-pointer hover:bg-gray-100 px-2 rounded"
+              >
                 Log in
-              </span>
+              </Link>
             </div>
           </div>
         </div>
