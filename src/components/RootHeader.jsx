@@ -40,7 +40,6 @@ const RootHeader = () => {
     },
   ]);
 
-
   const { user, logout } = useAuthStore();
 
   const searchRef = useRef(null);
@@ -119,10 +118,13 @@ const RootHeader = () => {
     <header className="w-full bg-white shadow-sm fixed top-0 left-0 z-50">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <FaAirbnb className="text-3xl text-red-500" />
-          <span className="hidden sm:inline text-3xl text-red-500 font-semibold">
-            airbnb
-          </span>
+          <a href="/" className="flex items-center gap-2">
+            <FaAirbnb className="text-3xl text-red-500" />
+            <span className="hidden sm:inline text-3xl text-red-500 font-semibold">
+              airbnb
+            </span>
+          </a>
+
           <button
             className="md:hidden text-xl text-gray-700 cursor-pointer mobile-menu-button"
             onClick={toggleMobileMenu}
@@ -153,9 +155,21 @@ const RootHeader = () => {
         </div>
 
         <div className="flex items-center space-x-4">
-          <span className="hidden md:inline text-sm font-medium text-gray-700 hover:underline cursor-pointer">
-            Become a host
-          </span>
+          {user ? (
+            <a
+              href="/become-a-host"
+              className="text-gray-700 font-medium py-2 cursor-pointer hover:bg-gray-100 px-2 rounded"
+            >
+              Become a Host
+            </a>
+          ) : (
+            <a
+              href="/login"
+              className="text-gray-700 font-medium py-2 cursor-pointer hover:bg-gray-100 px-2 rounded"
+            >
+              Become a Host
+            </a>
+          )}
           <div className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
             <FaGlobe className="text-xl text-gray-700" />
           </div>
@@ -240,16 +254,32 @@ const RootHeader = () => {
               <span className="text-gray-700 font-medium py-2 cursor-pointer hover:bg-gray-100 px-2 rounded">
                 Experiences
               </span>
-              <span className="text-gray-700 font-medium py-2 cursor-pointer hover:bg-gray-100 px-2 rounded">
+              <a
+                href=""
+                className="text-gray-700 font-medium py-2 cursor-pointer hover:bg-gray-100 px-2 rounded"
+              >
                 Online Experiences
-              </span>
-              <span className="text-gray-700 font-medium py-2 cursor-pointer hover:bg-gray-100 px-2 rounded">
-                Become a Host
-              </span>
+              </a>
+              {user ? (
+                <a
+                  href="/become-a-host"
+                  className="text-gray-700 font-medium py-2 cursor-pointer hover:bg-gray-100 px-2 rounded"
+                >
+                  Become a Host
+                </a>
+              ) : (
+                <span className="text-gray-700 font-medium py-2 cursor-pointer hover:bg-gray-100 px-2 rounded">
+                  Become a Host
+                </span>
+              )}
+
               <hr />
-              <span className="text-gray-700 font-medium py-2 cursor-pointer hover:bg-gray-100 px-2 rounded">
+              <a
+                href="/help-center"
+                className="text-gray-700 font-medium py-2 cursor-pointer hover:bg-gray-100 px-2 rounded"
+              >
                 Help Center
-              </span>
+              </a>
               <Link
                 to="/signup"
                 className="text-gray-700 font-medium py-2 cursor-pointer hover:bg-gray-100 px-2 rounded"

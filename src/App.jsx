@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage";
 import AuthPage from "./components/AuthPage";
 import Profile from "./pages/admin/Profile";
 import AuthSuccess from "./components/AuthSuccess";
+import HostPage from "./pages/admin/HostPage";
 
 function AppContent() {
   const { checkAuth } = useAuthStore();
@@ -38,6 +39,7 @@ function AppContent() {
       <Route path="/" element={<RootLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/become-a-host" element={<HostPage />} />
       </Route>
       <Route path="/login" element={<AuthPage />} />
       <Route path="/signup" element={<AuthPage />} />

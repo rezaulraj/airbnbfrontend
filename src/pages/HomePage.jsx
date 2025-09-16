@@ -1,9 +1,10 @@
-import React from 'react'
+import React from "react";
+import { useHostStore } from "../store/useHostStore";
 
 const HomePage = () => {
-  return (
-    <div>HomePage</div>
-  )
-}
+  const { properties, loading, fetchProperties } = useHostStore();
+  console.log("properties", properties);
+  return <div>HomePage</div>;
+};
 
-export default HomePage
+export default HomePage;
