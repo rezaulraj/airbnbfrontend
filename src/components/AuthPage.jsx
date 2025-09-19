@@ -79,7 +79,7 @@ const AuthPage = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
+    window.location.href = `https://airbnbclone-mongo-api.onrender.com/api/auth/google`;
   };
 
   return (
