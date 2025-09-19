@@ -197,12 +197,11 @@ const HostPage = () => {
     setImageFiles([]);
     setIsModalOpen(true);
   };
-console.log("properties", properties)
+  console.log("properties", properties);
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 py-50">
       <ToastContainer position="top-right" autoClose={3000} />
 
-      {/* Header */}
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-800">My Properties</h1>
         <button
@@ -227,7 +226,6 @@ console.log("properties", properties)
         </button>
       </div>
 
-      {/* Properties Grid */}
       {loading && !properties.length ? (
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
@@ -408,9 +406,8 @@ console.log("properties", properties)
         </div>
       )}
 
-      {/* Add/Edit Property Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-screen overflow-y-auto">
             <div className="border-b px-6 py-4 flex justify-between items-center">
               <h2 className="text-xl font-semibold text-gray-800">
@@ -439,7 +436,6 @@ console.log("properties", properties)
 
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Title */}
                 <div className="col-span-2">
                   <h3 className="text-lg font-medium text-gray-800 mb-4">
                     Basic Information
@@ -459,7 +455,6 @@ console.log("properties", properties)
                   </div>
                 </div>
 
-                {/* Description */}
                 <div className="col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Description
@@ -474,7 +469,6 @@ console.log("properties", properties)
                   />
                 </div>
 
-                {/* Price and Details */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Price per Night ($)
@@ -531,7 +525,6 @@ console.log("properties", properties)
                   />
                 </div>
 
-                {/* Amenities */}
                 <div className="col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Amenities
@@ -571,7 +564,6 @@ console.log("properties", properties)
                   </div>
                 </div>
 
-                {/* Address */}
                 <div className="col-span-2">
                   <h3 className="text-lg font-medium text-gray-800 mb-4">
                     Address
@@ -658,7 +650,6 @@ console.log("properties", properties)
                   </div>
                 </div>
 
-                {/* Images */}
                 <div className="col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Images

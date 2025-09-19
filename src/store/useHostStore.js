@@ -25,21 +25,39 @@ api.interceptors.request.use(
 
 export const useHostStore = create((set, get) => ({
   properties: [],
+  publicProperties: [],
   loading: false,
   error: null,
 
   fetchProperties: async () => {
     set({ loading: true, error: null });
     try {
-      const response = await api.get("/api/properties");
-
-      const user = JSON.parse(localStorage.getItem("user"));
-
-      const hostProperties = response.data.filter(
-        (property) => property.host._id === user._id
+      const response = await api.get(
+        `${import.meta.env.VITE_API_URL}/api/properties`
       );
 
+      const user = JSON.parse(localStorage.getItem("auth-storage"));
+      // console.log("auth-store", user.state.user._id);
+      const hostProperties = response.data.filter(
+        (property) => property.host._id === user.state.user._id
+      );
+      console.log("public", hostProperties);
       set({ properties: hostProperties, loading: false });
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || error.message,
+        loading: false,
+      });
+    }
+  },
+
+  fetchPublicProperties: async () => {
+    set({ loading: true, error: null });
+    try {
+      const response = await api.get(
+        `${import.meta.env.VITE_API_URL}/api/properties/public`
+      );
+      set({ publicProperties: response.data, loading: false });
     } catch (error) {
       set({
         error: error.response?.data?.message || error.message,
@@ -51,11 +69,15 @@ export const useHostStore = create((set, get) => ({
   createProperty: async (formData) => {
     set({ loading: true, error: null });
     try {
-      const response = await api.post("/api/properties", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await api.post(
+        `${import.meta.env.VITE_API_URL}/api/properties`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       set((state) => ({
         properties: [...state.properties, response.data],
@@ -73,11 +95,15 @@ export const useHostStore = create((set, get) => ({
   updateProperty: async (id, formData) => {
     set({ loading: true, error: null });
     try {
-      const response = await api.put(`/api/properties/${id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await api.put(
+        `${import.meta.env.VITE_API_URL}/api/properties/${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       set((state) => ({
         properties: state.properties.map((property) =>
@@ -97,7 +123,7 @@ export const useHostStore = create((set, get) => ({
   deleteProperty: async (id) => {
     set({ loading: true, error: null });
     try {
-      await api.delete(`/api/properties/${id}`);
+      await api.delete(`${import.meta.env.VITE_API_URL}/api/properties/${id}`);
 
       set((state) => ({
         properties: state.properties.filter((property) => property._id !== id),

@@ -2,7 +2,10 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import axios from "axios";
 
-axios.defaults.withCredentials = true;
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:8080",
+  withCredentials: true,
+});
 
 export const useAuthStore = create(
   persist(
@@ -22,7 +25,7 @@ export const useAuthStore = create(
       login: async (email, password) => {
         set({ loading: true, error: null });
         try {
-          const response = await axios.post(
+          const response = await api.post(
             `${import.meta.env.VITE_API_URL}/api/auth/login`,
             { email, password }
           );
@@ -45,7 +48,7 @@ export const useAuthStore = create(
       register: async (name, email, password) => {
         set({ loading: true, error: null });
         try {
-          const response = await axios.post(
+          const response = await api.post(
             `${import.meta.env.VITE_API_URL}/api/auth/register`,
             { name, email, password }
           );
@@ -67,7 +70,7 @@ export const useAuthStore = create(
 
       logout: async () => {
         try {
-          await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/logout`);
+          await api.post(`${import.meta.env.VITE_API_URL}/api/auth/logout`);
         } catch (error) {
           console.error("Logout error:", error);
         } finally {
@@ -81,7 +84,7 @@ export const useAuthStore = create(
 
       checkAuth: async () => {
         try {
-          const response = await axios.get(
+          const response = await api.get(
             `${import.meta.env.VITE_API_URL}/api/auth/me`
           );
           if (response.data) {
